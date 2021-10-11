@@ -1,12 +1,17 @@
 import React,{useEffect} from "react";
-import { Link, useLocation} from "react-router-dom";
+import { Link, useLocation,useHistory} from "react-router-dom";
 
 const Navbar = () => {
     // const location='/';
     const location = useLocation();
+    const history=useHistory();
     useEffect(() => {
         console.log(location.pathname);
     }, [location]);
+    const handleLogout=()=>{
+      localStorage.removeItem('token');
+      history.push('/login')
+    }
   return (
     <>
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -39,15 +44,17 @@ const Navbar = () => {
               </li>
             </ul>
             <form className="d-flex">
-              <input
-                className="form-control me-2"
-                type="search"
-                placeholder="Search"
-                aria-label="Search"
-              />
-              <button className="btn btn-outline-success" type="submit">
-                Search
-              </button>
+              {(!localStorage.getItem('token'))?<>
+              <Link to="/login" className="btn btn-outline-primary mx-1" type="submit">
+                Login
+              </Link>
+              <Link to="/signup" className="btn btn-outline-primary mx-2" type="submit">
+                SignUp
+              </Link>
+              </> :
+              <Link to="/login" className="btn btn-outline-primary mx-2" type="submit" onClick={handleLogout}>
+                Logout
+              </Link>}
             </form>
           </div>
         </div>

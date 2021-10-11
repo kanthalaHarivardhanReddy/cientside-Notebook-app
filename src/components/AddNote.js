@@ -38,6 +38,7 @@ const AddNote = () => {
                value={Note.title}
                onChange={onChange}
                placeholder="title"
+               minLength={5}
                 />
             </div>
             <div className="col-auto  my-2">
@@ -52,6 +53,7 @@ const AddNote = () => {
                 placeholder="description"
                 value={Note.description}
                onChange={onChange}
+               minLength={5}
               />
             </div>
             <div className="col-auto  my-2">
