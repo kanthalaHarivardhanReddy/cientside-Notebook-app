@@ -1,5 +1,6 @@
 import React, { useContext,useState } from "react";
 import NotesContext from '../Context/notes/notescontext';
+import AlertContext from '../Context/alert/alertcontext';
 
 const AddNote = () => {
     const context=useContext(NotesContext);
@@ -7,6 +8,8 @@ const AddNote = () => {
 
     const [Note, setNote] = useState({title:"",description:"",tag:"default"});
 
+    const contextalert=useContext(AlertContext);
+    const {showAlert}=contextalert;
     //on Changing the input of the title and description
     const onChange=(e)=>{
       setNote({...Note,[e.target.name]:e.target.value});
@@ -18,6 +21,7 @@ const AddNote = () => {
       console.log("Adding note"+Note.title);
       addNote(Note.title,Note.description,Note.tag);
       setNote({title:"",description:"",tag:""});
+      showAlert("note is added successfully to your notes","success");
     }
 
 

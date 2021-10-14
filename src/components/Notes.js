@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useRef, useState} from "react";
 import { useHistory } from "react-router-dom";
 import AddNote from "./AddNote";
 import NotesContext from "../Context/notes/notescontext";
+import AlertContext from "../Context/alert/alertcontext";
 import NoteItem from "./NoteItem";
 
 const Notes = () => {
@@ -10,6 +11,9 @@ const Notes = () => {
 
   const [Note, setNote] = useState({id:"",etitle:"",edescription:"",etag:"default"});
   const history=useHistory();
+
+  const contextalert=useContext(AlertContext);
+    const {showAlert}=contextalert;
     
   useEffect(() => {
     if(localStorage.getItem('token')){
@@ -29,16 +33,17 @@ const Notes = () => {
     setNote({id:note._id,etitle:note.title,edescription:note.description,etag:note.tag});
     console.log(note);
   };
-
+  
   //on Changing the input of the title and description
   const onChange=(e)=>{
     setNote({...Note,[e.target.name]:e.target.value});
-}
-
-//onClicking the submit button it updates the note
-const handleClick=()=>{
+  }
+  
+  //onClicking the submit button it updates the note
+  const handleClick=()=>{
     editNote(Note.id,Note.etitle,Note.edescription,Note.etag);
     ref.current.click();
+    showAlert("Updated the note ","success");
   }
 
   return (

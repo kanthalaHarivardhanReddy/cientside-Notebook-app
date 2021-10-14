@@ -1,10 +1,13 @@
-import React,{useState} from 'react'
+import React,{useState,useContext} from 'react'
 import {useHistory} from 'react-router-dom';
-
+import AlertContext from "../Context/alert/alertcontext";
 const SignUp = () => {
     const host="http://localhost:5000";
     const [credentials, setCredentials] = useState({name:"",email:"",password:"",cpassword:""});
     const history=useHistory();
+    const context=useContext(AlertContext);
+    const {showAlert}=context;
+
     const onChange=(e)=>{
         setCredentials({...credentials,[e.target.name]:e.target.value});
     }
@@ -22,6 +25,7 @@ const SignUp = () => {
         if(json.success){
           //save authtoken
           localStorage.setItem('token',json.authtoken);
+          showAlert("Account created Successfully","success");
           //redirect to home page
           history.push('/');
         }
